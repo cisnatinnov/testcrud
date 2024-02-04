@@ -173,6 +173,7 @@ function edit(id) {
     url: `http://localhost:8000/api/mahasiswa/${id}`,
     method:"GET",
     dataType:"JSON",
+    contentType: 'application/json; charset=utf-8',
     success:function(dt)
     {
       let mahasiswa = dt.mahasiswa
@@ -252,6 +253,7 @@ function submit() {
     $.ajax({
       url: `http://localhost:8000/api/mahasiswa`,
       method:"POST",
+      contentType: 'application/json; charset=utf-8',
       data: {
         nama: nama.value,
         jenis_kelamin: jenis_kelamin.value,
@@ -268,6 +270,7 @@ function submit() {
     $.ajax({
       url: `http://localhost:8000/api/mahasiswa/${dataId}`,
       method:"PUT",
+      contentType: 'application/json; charset=utf-8',
       data: {
         nama: nama.value,
         jenis_kelamin: jenis_kelamin.value,
