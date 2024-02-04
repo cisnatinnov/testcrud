@@ -125,7 +125,7 @@ $(document).ready(function () {
         }
       }
     ]
-  })  
+  })
 })
 
 let form = document.getElementById("form")
@@ -161,6 +161,8 @@ function tutup() {
   form.classList.remove("show")
   mahasiswa.classList.add("show")
   mahasiswa.classList.remove("hide")
+
+  setInterval('location.reload()', 7000);
 }
 
 function edit(id) {
@@ -254,15 +256,16 @@ function submit() {
       url: `http://localhost:8000/api/mahasiswa`,
       method:"POST",
       contentType: 'application/json; charset=utf-8',
-      data: {
+      data: JSON.stringify({
         nama: nama.value,
         jenis_kelamin: jenis_kelamin.value,
         alamat: alamat.value,
         mata_kuliah: mata_kuliah
-      },
+      }),
       dataType:"JSON",
       success: function(dt) {
         alert(`Successfully created data`)
+        tutup()
       }
     })
   }
@@ -271,15 +274,16 @@ function submit() {
       url: `http://localhost:8000/api/mahasiswa/${dataId}`,
       method:"PUT",
       contentType: 'application/json; charset=utf-8',
-      data: {
+      data: JSON.stringify({
         nama: nama.value,
         jenis_kelamin: jenis_kelamin.value,
         alamat: alamat.value,
         mata_kuliah: mata_kuliah
-      },
+      }),
       dataType:"JSON",
       success: function(dt) {
         alert(`Successfully updated data`)
+        tutup()
       }
     })
   }
