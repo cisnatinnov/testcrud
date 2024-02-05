@@ -162,7 +162,7 @@ function tutup() {
   mahasiswa.classList.add("show")
   mahasiswa.classList.remove("hide")
 
-  setInterval('location.reload()', 2000);
+  setInterval('location.reload()', 500);
 }
 
 function edit(id) {
