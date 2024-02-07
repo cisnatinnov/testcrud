@@ -18,6 +18,7 @@ class CreateMahaSiswaTable extends Migration
             $table->string('nama');
             $table->string('jenis_kelamin');
             $table->text('alamat');
+            $table->text('sks');
             $table->timestamps();
         });
     }

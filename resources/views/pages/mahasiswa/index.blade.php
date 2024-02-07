@@ -14,6 +14,7 @@
       <thead>
         <tr>
           <th class="text-center hide">ID</th>
+          <th class="text-center">#</th>
           <th class="text-center">Nama</th>
           <th class="text-center">Jenis Kelamin</th>
           <th class="text-center">Alamat</th>
@@ -26,6 +27,7 @@
       <tfoot>
         <tr>
           <th class="text-center hide">ID</th>
+          <th class="text-center">#</th>
           <th class="text-center">Nama</th>
           <th class="text-center">Jenis Kelamin</th>
           <th class="text-center">Alamat</th>
@@ -72,6 +74,13 @@
       </table>
     </div>
     <div class="mb-3">
+      <label class="form-label">SKS</label>
+      <input type="file" name="file" id="file" accept=".pdf, .docx, doc, .xlsx, .xls">
+    </div>
+    <div class="mb-3">
+      <a id="berkas" class="hide" href="" download>SKS</a>
+    </div>
+    <div class="mb-3">
       <button
         onclick="submit()"
         class="btn btn-xs btn-primary float-right"
@@ -98,6 +107,7 @@
     contentType: 'application/json; charset=utf-8',
     columns: [
       {data: 'id', name: 'id'},
+      {data: null},
       {data: 'nama', name: 'nama'},
       {data: 'jenis_kelamin', name: 'jenis_kelamin'},
       {data: 'alamat', name: 'alamat'},
@@ -112,15 +122,20 @@
     ],
     columnDefs: [
       { targets: [ 0 ], visible: false },
-      { targets: [ 0, 2, 4, 5 ], className: 'dt-center' },
-      { targets: [ 2, 5 ], orderable: false },
-      { targets: [ 5 ], searchable: false },
-      { width: "10%", targets: [ 2, 4 ] },
-      { width: "30%", targets: [ 1, 3 ] }
+      { targets: [ 0, 1, 3, 5, 6 ], className: 'dt-center' },
+      { targets: [ 3, 6 ], orderable: false },
+      { targets: [ 1, 6 ], searchable: false },
+      { width: "5%", targets: [ 1 ] },
+      { width: "10%", targets: [ 3, 5 ] },
+      { width: "30%", targets: [ 2, 4 ] }
     ]
   })
   $(document).ready(function () {
-    table.draw()
+    table.on('order.dt search.dt', function () {
+      table.column(1, { search: 'applied', order: 'applied' }).nodes().each(function (cell, i) {
+        cell.innerHTML = i + 1;
+      });
+    }).draw()
   })
 
   let form = document.getElementById("form")
@@ -130,9 +145,25 @@
   var alamat = document.getElementById('alamat')
   var datas = document.getElementById('datas')
   let label = document.getElementById("label")
+  let file = document.getElementById("file")
+  let berkas = document.getElementById("berkas")
+  var sks = ''
   let dataId = 0
 
   let mata_kuliah = []
+
+  file.onchange = function() {
+    let input = this.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(input);
+    reader.onload = () => {
+      const fileBase64 = reader.result;
+      sks = fileBase64;
+      berkas.href = sks
+      berkas.classList.add("show")
+      berkas.classList.remove("hide")
+    }
+  }
 
   function tambah() {
     label.innerHTML = 'Tambah'
@@ -147,6 +178,7 @@
     nama.value = ""
     jenis_kelamin.value = ""
     alamat.value = ""
+    sks = ""
 
     tambah_matakuliah()
   }
@@ -178,7 +210,11 @@
         nama.value = mahasiswa.nama
         jenis_kelamin.value = mahasiswa.jenis_kelamin
         alamat.value = mahasiswa.alamat
+        sks = mahasiswa.sks
         dataId = id
+        berkas.href = sks
+        berkas.classList.add("show")
+        berkas.classList.remove("hide")
 
         tambah_matakuliah()
       }
@@ -190,6 +226,7 @@
     var tr = ``
     mata_kuliah.forEach((x, i)=>{
       tr += `<tr>
+        <td>${i+1}</td>
         <td>
           <input
             type="text"
@@ -239,10 +276,8 @@
 
   function matakuliah(i) {
     let matkul = document.getElementById(`matakuliah${i}`)
-    if (matkul.value.length >= 4) {
-      mata_kuliah[i] = {
-        nama: matkul.value
-      }
+    mata_kuliah[i] = {
+      nama: matkul.value
     }
   }
 
@@ -256,6 +291,7 @@
           nama: nama.value,
           jenis_kelamin: jenis_kelamin.value,
           alamat: alamat.value,
+          sks: sks,
           mata_kuliah: mata_kuliah
         }),
         dataType:"JSON",
@@ -274,6 +310,7 @@
           nama: nama.value,
           jenis_kelamin: jenis_kelamin.value,
           alamat: alamat.value,
+          sks: sks,
           mata_kuliah: mata_kuliah
         }),
         dataType:"JSON",

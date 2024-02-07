@@ -38,12 +38,14 @@ class MahasiswaController extends Controller
         $request->validate([
             'nama' => 'required',
             'jenis_kelamin' => 'required',
-            'alamat' => 'required'
+            'alamat' => 'required',
+            'sks' => 'required'
         ]);
         $mahasiswa = new Mahasiswa;
         $mahasiswa->nama = $post['nama'];
         $mahasiswa->jenis_kelamin = $post['jenis_kelamin'];
         $mahasiswa->alamat = $post['alamat'];
+        $mahasiswa->sks = $post['sks'];
         $mahasiswa->save();
 
         foreach($post['mata_kuliah'] as $obj) {
@@ -94,14 +96,16 @@ class MahasiswaController extends Controller
         $request->validate([
             'nama' => 'required',
             'jenis_kelamin' => 'required',
-            'alamat' => 'required'
+            'alamat' => 'required',
+            'sks' => 'required'
         ]);
         $mahasiswa = DB::table('mahasiswas');
         $mahasiswa->where('id', $id);
         $mahasiswa->update([
             'nama' => $post['nama'],
             'jenis_kelamin' => $post['jenis_kelamin'],
-            'alamat' => $post['alamat']
+            'alamat' => $post['alamat'],
+            'sks' => $post['sks']
         ]);
 
         DB::table('mata_kuliahs')->where('mahasiswa_id', $id)->delete();

@@ -13,5 +13,6 @@ class Mahasiswa extends Model
         'nama',
         'jenis_kelamin',
         'alamat',
+        'sks'
     ];
 }
