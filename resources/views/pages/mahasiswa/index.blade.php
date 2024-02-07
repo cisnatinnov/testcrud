@@ -90,35 +90,37 @@
     }
   </style>
   <script type="text/javascript">
-  $(document).ready(function () {
-    var table = $('.data-table').DataTable({
-      ajax: {url: "http://localhost:8000/api/mahasiswa", dataSrc: ''},
-      type: 'GET',
-      dataType: 'json',
-      contentType: 'application/json; charset=utf-8',
-      columns: [
-        {data: 'id', name: 'id'},
-        {data: 'nama', name: 'nama'},
-        {data: 'jenis_kelamin', name: 'jenis_kelamin'},
-        {data: 'alamat', name: 'alamat'},
-        {data: 'count', name: 'count'},
-        {
-          data: null,
-          render: function ( data, type, row ) {
-            return `<button onclick="edit(${row.id})" class="btn btn-xs btn-secondary btn-edit">Ubah</button>
-            <button onclick="del(${row.id})" class="btn btn-xs btn-danger btn-delete">Haous</button>`;
-          }
+  var table = $('.data-table').DataTable({
+    processing: true,
+    ajax: {url: "http://localhost:8000/api/mahasiswa", dataSrc: ''},
+    type: 'GET',
+    dataType: 'json',
+    contentType: 'application/json; charset=utf-8',
+    columns: [
+      {data: 'id', name: 'id'},
+      {data: 'nama', name: 'nama'},
+      {data: 'jenis_kelamin', name: 'jenis_kelamin'},
+      {data: 'alamat', name: 'alamat'},
+      {data: 'count', name: 'count'},
+      {
+        data: null,
+        render: function ( data, type, row ) {
+          return `<button onclick="edit(${row.id})" class="btn btn-xs btn-secondary btn-edit">Ubah</button>
+          <button onclick="del(${row.id})" class="btn btn-xs btn-danger btn-delete">Haous</button>`;
         }
-      ],
-      columnDefs: [
-        { targets: [ 0 ], visible: false },
-        { targets: [ 0, 2, 4, 5 ], className: 'dt-center' },
-        { targets: [ 2, 5 ], orderable: false },
-        { targets: [ 5 ], searchable: false },
-        { width: "10%", targets: [ 2, 4 ] },
-        { width: "30%", targets: [ 1, 3 ] }
-      ]
-    })
+      }
+    ],
+    columnDefs: [
+      { targets: [ 0 ], visible: false },
+      { targets: [ 0, 2, 4, 5 ], className: 'dt-center' },
+      { targets: [ 2, 5 ], orderable: false },
+      { targets: [ 5 ], searchable: false },
+      { width: "10%", targets: [ 2, 4 ] },
+      { width: "30%", targets: [ 1, 3 ] }
+    ]
+  })
+  $(document).ready(function () {
+    table.draw()
   })
 
   let form = document.getElementById("form")
