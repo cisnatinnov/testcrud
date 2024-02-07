@@ -78,7 +78,7 @@ class MahasiswaController extends Controller
             ->make(true);
         }
 
-        return view('mahasiswa.index');
+        return view('pages.mahasiswa.index');
     }
 
     /**

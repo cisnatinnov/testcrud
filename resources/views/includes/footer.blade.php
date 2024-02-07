@@ -1,0 +1,1 @@
+  <div class="float-right">© Copyright 2024 Mohamad Cendikia Isnatinnov Hairy</div>
