@@ -157,7 +157,7 @@
     mahasiswa.classList.add("show")
     mahasiswa.classList.remove("hide")
 
-    setInterval('location.reload()', 500);
+    setInterval('location.reload()', 2000);
   }
 
   function edit(id) {
@@ -232,7 +232,7 @@
       success:function(dt)
       {
         alert('Succesfully deleted')
-        tutup()
+        setInterval('location.reload()', 2000);
       }
     })
   }
